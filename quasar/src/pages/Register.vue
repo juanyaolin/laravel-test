@@ -16,6 +16,10 @@
         placeholder="Password Confirm"
       />
     </div>
+    <div>
+      <input type="checkbox" v-model="useCsrf" />
+      Use CSRF
+    </div>
     <button @click="register">Register</button>
   </div>
 </template>
@@ -25,7 +29,8 @@ export default {
   name: "Register",
   data() {
     return {
-      form: {}
+      form: {},
+      useCsrf: false
     };
   },
   methods: {
@@ -41,6 +46,11 @@ export default {
         .catch(e => {
           console.error(e);
         });
+    },
+    created() {
+      if (this.useCsrf) {
+        this.$axios.get("http://api.dr-smoking.org:21080/sanctum/csrf-token");
+      }
     }
   }
 };

@@ -8,6 +8,10 @@
       <label for="">Password:</label>
       <input type="text" v-model="form.password" placeholder="Password" />
     </div>
+    <div>
+      <input type="checkbox" v-model="useCsrf" />
+      Use CSRF
+    </div>
     <button @click="login">Login</button>
   </div>
 </template>
@@ -17,21 +21,28 @@ export default {
   name: "Login",
   data() {
     return {
-      form: {}
+      form: {},
+      useCsrf: false
     };
   },
   methods: {
     login() {
       console.log("login btn");
       console.log(this.form);
+
       this.$axios
-        .post("http://api.dr-smoking.org/api/login")
+        .post("http://api.dr-smoking.org:21080/api/login")
         .then(res => {
           console.log(res);
         })
         .catch(e => {
           console.error(e);
         });
+    }
+  },
+  created() {
+    if (this.useCsrf) {
+      this.$axios.get("http://api.dr-smoking.org:21080/sanctum/csrf-token");
     }
   }
 };
