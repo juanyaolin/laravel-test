@@ -38,6 +38,9 @@ export default {
       console.log("register btn");
       console.log(this.form);
 
+      if (this.useCsrf) {
+        this.$axios.get("http://api.dr-smoking.org:21080/sanctum/csrf-token");
+      }
       this.$axios
         .post("http://api.dr-smoking.org:21080/api/register")
         .then(res => {
@@ -47,11 +50,7 @@ export default {
           console.error(e);
         });
     },
-    created() {
-      if (this.useCsrf) {
-        this.$axios.get("http://api.dr-smoking.org:21080/sanctum/csrf-token");
-      }
-    }
+    created() {}
   }
 };
 </script>
