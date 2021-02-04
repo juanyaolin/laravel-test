@@ -39,7 +39,7 @@ export default {
       console.log(this.form);
 
       if (this.useCsrf) {
-        this.$axios.get("http://api.dr-smoking.org:21080/sanctum/csrf-token");
+        this.$axios.get("http://api.dr-smoking.org:21080/sanctum/csrf-cookie");
       }
       this.$axios
         .post("http://api.dr-smoking.org:21080/api/register")
