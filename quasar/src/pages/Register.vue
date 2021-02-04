@@ -39,7 +39,7 @@ export default {
       console.log(this.form);
 
       this.$axios
-        .post("http://api.dr-smoking.org/api/register")
+        .post("http://api.dr-smoking.org:21080/api/register")
         .then(res => {
           console.log(res);
         })
