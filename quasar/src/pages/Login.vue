@@ -26,15 +26,23 @@ export default {
     };
   },
   methods: {
-    login() {
-      console.log("login btn");
-      console.log(this.form);
-
+    onSubmit() {
       if (this.useCsrf) {
-        this.$axios.get("http://api.dr-smoking.org:21080/sanctum/csrf-cookie");
+        this.$axios
+          .get("http://api.dr-smoking.org:21080/sanctum/csrf-cookie")
+          .then(res => {
+            this.login();
+          })
+          .then(e => {
+            console.error(e);
+          });
+      } else {
+        this.login();
       }
+    },
+    login() {
       this.$axios
-        .post("http://api.dr-smoking.org:21080/api/login")
+        .post("http://api.dr-smoking.org:21080/login")
         .then(res => {
           console.log(res);
         })
@@ -42,8 +50,7 @@ export default {
           console.error(e);
         });
     }
-  },
-  created() {}
+  }
 };
 </script>
 

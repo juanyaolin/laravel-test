@@ -20,7 +20,7 @@
       <input type="checkbox" v-model="useCsrf" />
       Use CSRF
     </div>
-    <button @click="register">Register</button>
+    <button @click="onSubmit">Register</button>
   </div>
 </template>
 
@@ -34,23 +34,31 @@ export default {
     };
   },
   methods: {
-    register() {
-      console.log("register btn");
-      console.log(this.form);
-
+    onSubmit() {
       if (this.useCsrf) {
-        this.$axios.get("http://api.dr-smoking.org:21080/sanctum/csrf-cookie");
+        this.$axios
+          .get("http://api.dr-smoking.org:21080/sanctum/csrf-cookie")
+          .then(res => {
+            this.register();
+          })
+          .catch(e => {
+            console.error(e);
+          });
+      } else {
+        this.register();
       }
+    },
+
+    register() {
       this.$axios
-        .post("http://api.dr-smoking.org:21080/api/register")
+        .post("http://api.dr-smoking.org:21080/register")
         .then(res => {
           console.log(res);
         })
         .catch(e => {
           console.error(e);
         });
-    },
-    created() {}
+    }
   }
 };
 </script>
