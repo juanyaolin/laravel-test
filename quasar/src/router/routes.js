@@ -6,15 +6,16 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/Index.vue") }],
     beforeEnter(to, from, next) {
-      console.log("hello");
-      Axios.get("/api/authenticated")
-        .then(res => {
-          console.log(res);
-        })
-        .catch(e => {
-          console.error(e);
-          next({ name: "login" });
-        });
+      Axios.defaults.withCredentials = true;
+      Axios.defaults.baseURL = process.env.API_URL;
+      Axios.get("/api/authenticated");
+      // .then(res => {
+      //   console.log(res);
+      // })
+      // .catch(e => {
+      //   console.error(e);
+      //   next({ name: "login" });
+      // });
     }
   },
 

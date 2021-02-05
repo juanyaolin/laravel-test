@@ -28,11 +28,11 @@ export default {
   methods: {
     login() {
       if (this.useCsrf) {
-        this.$axios
-          .get("http://api.dr-smoking.org:21080/sanctum/csrf-cookie")
+        this.$api
+          .get("/sanctum/csrf-cookie")
           .then(res => {
-            this.$axios
-              .post("http://api.dr-smoking.org:21080/login")
+            this.$api
+              .post("/login")
               .then(res => {
                 console.log(res);
               })
@@ -44,8 +44,8 @@ export default {
             console.error(e);
           });
       } else {
-        this.$axios
-          .post("http://api.dr-smoking.org:21080/login")
+        this.$api
+          .post("/login")
           .then(res => {
             console.log(res);
           })
